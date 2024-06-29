@@ -1636,6 +1636,8 @@ default: %(va)s
         sf = SubFigure(self, subplotspec, **kwargs)
         self.subfigs += [sf]
         sf._remove_method = self.subfigs.remove
+        sf.stale_callback = _stale_figure_callback
+        self.stale = True
         return sf
 
     def sca(self, a):
@@ -2227,7 +2229,6 @@ class SubFigure(FigureBase):
         self.subplotpars = parent.subplotpars
         self.dpi_scale_trans = parent.dpi_scale_trans
         self._axobservers = parent._axobservers
-        self.canvas = parent.canvas
         self.transFigure = parent.transFigure
         self.bbox_relative = Bbox.null()
         self._redo_transform_rel_fig()
@@ -2243,6 +2244,10 @@ class SubFigure(FigureBase):
             in_layout=False, transform=self.transSubfigure)
         self._set_artist_props(self.patch)
         self.patch.set_antialiased(False)
+
+    @property
+    def canvas(self):
+        return self._parent.canvas
 
     @property
     def dpi(self):
