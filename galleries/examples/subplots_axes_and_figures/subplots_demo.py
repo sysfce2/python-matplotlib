@@ -151,6 +151,7 @@ axs[2].plot(x, y, '+')
 
 axs[0].tick_params(labelbottom=True)
 
+# %%
 # It is also possible to remove the empty space between the subplots.
 # To precisely control the positioning of the subplots, one can explicitly
 # create a `.GridSpec` with `.Figure.add_gridspec`, and then call its
